@@ -1,0 +1,9 @@
+[package]
+name = "qr-common"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+hex = "0.4.3"
+hmac = "0.12.1"
+sha3 = "0.10.8"

@@ -1,0 +1,11 @@
+[package]
+name = "qr-reader"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+opencv = "0.92.2"
+hmac = "0.12.1"
+qr-common = { path = "../qr-common" }
+tungstenite = { version = "0.24.0", features = ["native-tls"] }
+base85 = "2.0.0"
