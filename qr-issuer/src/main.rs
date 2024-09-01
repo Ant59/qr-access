@@ -1,19 +1,22 @@
 mod qr;
 mod token;
 
-use std::time::Duration;
+use actix_web::{post, web::Json, App, HttpResponse, HttpServer};
+use serde::Deserialize;
 
-use actix_web::{get, App, HttpResponse, HttpServer};
+#[derive(Deserialize)]
+struct Token {
+    user: String,
+    expiry: u64,
+}
 
-#[get("/")]
-async fn issue_token() -> actix_web::Result<HttpResponse> {
-    let token = token::new("user", Duration::from_secs(60));
+#[post("/")]
+async fn issue_token(form: Json<Token>) -> actix_web::Result<HttpResponse> {
+    let token = token::new(&form.user, &form.expiry);
 
-    let image_html = qr::create_qr_image_html(&token);
-    let escaped_token = token.replace("<", "&lt;").replace(">", "&gt;");
-    let html = format!("<p><pre>{}</pre></p>{}", escaped_token, image_html);
+    let png = qr::create_qr_png(&token);
 
-    Ok(HttpResponse::Ok().body(html))
+    Ok(HttpResponse::Ok().body(png))
 }
 
 #[actix_web::main]

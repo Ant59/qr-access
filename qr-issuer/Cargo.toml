@@ -11,3 +11,4 @@ image = "0.25.2"
 qrcode = "0.14.1"
 qr-common = { path = "../qr-common" }
 base85 = "2.0.0"
+serde = { version = "1.0.209", features = ["derive"] }
